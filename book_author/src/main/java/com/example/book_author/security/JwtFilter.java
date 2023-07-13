@@ -1,6 +1,6 @@
 package com.example.book_author.security;
 
-import com.example.book_author.entity.User;
+import com.example.book_author.service.impl.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -19,11 +20,11 @@ import java.util.ArrayList;
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
 
-    private final JwtService jwtService;
+    private final CustomUserDetailsService customUserDetailsService;
     private final JwtProvider jwtProvider;
 
     @Override
-    protected void doFilterInternal(
+    protected void doFilterInternal( //eshitaolmayapman
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
@@ -32,10 +33,12 @@ public class JwtFilter extends OncePerRequestFilter {
         if (authorization != null && authorization.startsWith("Bearer ")) {
             String token = authorization.substring(7);
             String usernameFromToken = jwtProvider.getUsernameFromToken(token);
-            User user = (User) jwtService.loadUserByUsername(usernameFromToken);
-            SecurityContextHolder.getContext().setAuthentication(
-                    new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>()));
+            if (usernameFromToken != null){
+                UserDetails userDetails = customUserDetailsService.loadUserByUsername(usernameFromToken);
+                SecurityContextHolder.getContext().setAuthentication(
+                        new UsernamePasswordAuthenticationToken(userDetails, null, new ArrayList<>()));
+            }
         }
-filterChain.doFilter(request, response);
+        filterChain.doFilter(request, response);
     }
 }

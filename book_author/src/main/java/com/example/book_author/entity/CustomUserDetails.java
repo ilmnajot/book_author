@@ -1,17 +1,18 @@
 package com.example.book_author.entity;
-import com.example.book_author.entity.absClass.BaseEntity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.Collection;
 import java.util.List;
+public class CustomUserDetails implements UserDetails {
 
-@Data
-public class CustumerUserDetails implements UserDetails {
+    private final User user;
 
-private User user;
+    public CustomUserDetails(User user) {
+        this.user = user;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -48,7 +49,4 @@ private User user;
         return true;
     }
 
-    public CustumerUserDetails(User user) {
-        this.user = user;
-    }
 }

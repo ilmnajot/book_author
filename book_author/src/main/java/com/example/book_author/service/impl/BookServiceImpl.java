@@ -2,7 +2,6 @@ package com.example.book_author.service.impl;
 
 import com.example.book_author.dto.BookDto;
 import com.example.book_author.dto.BookForm;
-import com.example.book_author.dto.mapper.BookMapper;
 import com.example.book_author.entity.Author;
 import com.example.book_author.entity.Book;
 import com.example.book_author.entity.SuccessDto;
@@ -45,25 +44,26 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDto update(Long id, BookForm form) {
         Book book = bookRepository.findByIdAndDeletedFalse(id);
-        if (book==null){
+        if (book == null) {
             throw new AppException("Book not found with id " + id);
         }
+
+//        if (bookRepository.)
         book.setName(form.getName());
         book.setDescription(form.getDescription());
         book.setLanguage(form.getLanguage());
         book.setIsbn(form.getIsbn());
-        book.setId(id);
         Book saved = bookRepository.save(book);
         return BookDto.toDto(saved);
     }
 
     @Override
     public BookDto getOne(Long id) {
-        Book book= bookRepository.findByIdAndDeletedFalse(id);
-        if (book!=null){
-        return BookDto.toDto(book);
+        Book book = bookRepository.findByIdAndDeletedFalse(id);
+        if (book == null) {
+            throw new AppException("there is no book with id " + id);
         }
-        throw  new AppException("there is no book with id " + id);
+        return BookDto.toDto(book);
     }
 
     @Override
@@ -76,10 +76,11 @@ public class BookServiceImpl implements BookService {
         }
         return bookDtos;
     }
+
     @Override
     public SuccessDto delete(Long id) {
         Book book = bookRepository.findByIdAndDeletedFalse(id);
-        if (book==null){
+        if (book == null) {
             throw new AppException("Book not found with id " + id);
         }
         book.setDeleted(true);
