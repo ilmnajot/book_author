@@ -7,13 +7,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Optional;
 
-public class SecurityAuditAwareImpl implements AuditorAware<String> {
+public class SecurityAuditAwareImpl implements AuditorAware<Long> {
     @Override
-    public Optional<String> getCurrentAuditor() {
+    public Optional<Long> getCurrentAuditor() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-if (authentication!=null && authentication.isAuthenticated() && !authentication.getPrincipal().equals("anonymousUser")) {
-    User user =(User) authentication.getPrincipal();
-return Optional.of(user.getUsername());
+if (
+        authentication!=null
+                && authentication.isAuthenticated()
+                && !authentication.getPrincipal().equals("anonymousUser")) {
+   User user = (User) authentication.getPrincipal();
+    return Optional.of(user.getId());
 }
         return Optional.empty();
     }

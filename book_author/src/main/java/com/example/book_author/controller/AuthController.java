@@ -34,7 +34,8 @@ public class AuthController {
     }
     @PostMapping("/login")
     public HttpEntity<?> loginToSystem(@RequestBody LoginDto loginDto) {
-        Authentication authenticated = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+        Authentication authenticated =
+                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginDto.getUsername(),
                 loginDto.getPassword()
         ));

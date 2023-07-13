@@ -33,15 +33,15 @@ public class JwtService implements UserDetailsService {
         return optionalUser.orElseThrow(() -> new NoSuchElementException("username not found by email"));
 
     }
-
     public UserDto registerUser(UserForm form) {
         boolean user= userRepository.existsByUsernameAndDeletedFalse(form.getUsername());
-        if (!user){
-            throw new AppException("there is no such user with " + form.getUsername());
+        if (user){
+            throw new AppException("there is already exists user with " + form.getUsername());
         }
       User user1 = new User();
         user1.setFirstName(form.getFirstName());
         user1.setFirstName(form.getLastName());
+        user1.setLastName(form.getLastName());
         user1.setUsername(form.getUsername());
         user1.setPassword(passwordEncoder.encode(form.getPassword()));
         user1.setRoleName(RoleName.USER);

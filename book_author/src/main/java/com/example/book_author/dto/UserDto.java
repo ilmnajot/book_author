@@ -15,12 +15,14 @@ public class UserDto {
     private String firstName;
 
     private String lastName;
+    private String username;
 
     public static UserDto toUserDto(User user){
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
+        userDto.setUsername(user.getUsername());
         return userDto;
     }
 }

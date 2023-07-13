@@ -1,5 +1,6 @@
 package com.example.book_author.entity.absClass;
 
+import com.example.book_author.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,11 +32,15 @@ public abstract class BaseEntity {
     @LastModifiedDate
     private Date modifiedDate;
 
+    @ManyToOne
     @CreatedBy
-    private String createdBy;
+    @JoinColumn(name = "createdBy")
+    private User createdBy;
 
     @LastModifiedBy
-    private String lastModifiedBy;
+    @ManyToOne
+    @JoinColumn(name="updatedBy")
+    private User lastModifiedBy;
 
     private Boolean deleted;
 }
