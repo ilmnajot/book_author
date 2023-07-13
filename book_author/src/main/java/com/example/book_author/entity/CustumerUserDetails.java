@@ -1,6 +1,7 @@
 package com.example.book_author.entity;
 import com.example.book_author.entity.absClass.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,7 +9,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Data
-public class CustumerUserDetails extends BaseEntity implements UserDetails {
+public class CustumerUserDetails implements UserDetails {
 
 private User user;
 

@@ -32,15 +32,15 @@ public abstract class BaseEntity {
     @LastModifiedDate
     private Date modifiedDate;
 
-    @ManyToOne
+//    @ManyToOne // auditing by id
     @CreatedBy
-    @JoinColumn(name = "createdBy")
-    private User createdBy;
+//    @JoinColumn(name = "createdBy")
+    private String createdBy;
 
     @LastModifiedBy
-    @ManyToOne
-    @JoinColumn(name="updatedBy")
-    private User lastModifiedBy;
+//    @ManyToOne
+//    @JoinColumn(name="updatedBy")
+    private String lastModifiedBy;
 
     private Boolean deleted;
 }
