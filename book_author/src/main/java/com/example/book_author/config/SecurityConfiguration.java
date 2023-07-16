@@ -30,6 +30,7 @@ public class SecurityConfiguration {
             .disable()
             .authorizeHttpRequests()
             .requestMatchers("/api/auth/**").permitAll()
+            .requestMatchers("/api/books/**").permitAll()
             .anyRequest()
             .authenticated()
             .and()
